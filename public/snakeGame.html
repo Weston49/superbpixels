@@ -1,0 +1,351 @@
+
+<html>
+    <head>
+        <title>Snake Game Simple</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://static.codehs.com/gulp/da9dd51994928211bbc93e60d93d585ea9f44a7c/chs-js-lib/chs.js"></script>
+        <style>
+            canvas {
+                border: 1px solid black;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            
+            .button:hover {
+                background-color: black;
+                color: white;
+            }
+            
+            body {
+                background-size: cover;
+            }
+        </style>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="/__/firebase/7.12.0/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="/__/firebase/7.12.0/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="/__/firebase/7.12.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.12.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/7.12.0/firebase-database.js"></script>
+  <script src="./js/firebase.js"></script>
+
+      <!--Referencing non firebase things-->
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
+  <script src="./js/leaderBoard.js"></script>
+
+
+</head>
+    
+    <body>
+    
+        <canvas width="640" height="400" class="codehs-editor-canvas"></canvas>
+        <form action=".\index.html">
+            <button type="submit" class="button">
+                    Home Page
+                </button>
+        </form>
+
+    
+        <script>
+            if (localStorage.getItem("name") != null){
+                document.getElementById("name").value = localStorage.getItem("username");
+            }
+            window.onload = function() {
+                var blocks = [];
+                var size = 40;
+                var direction = 0;
+                var numSnakes = 0;
+                var hasTail = false;
+                var speed = 120;
+                var snake = new Rectangle(size, size);
+                snake.setColor(Color.green);
+                var apple = new Rectangle(size, size);
+                var appleX = Randomizer.nextInt(1, ((getWidth() - size) / size)) * size;
+                var appleY = Randomizer.nextInt(1, ((getHeight() - size) / size)) * size;
+                apple.setColor(Color.red);
+                var foodSpawned = false;
+                var moveX = snake.width;
+                var moveY = 0;
+                var resetTxt = new Text("Press Space to Restart", "24pt Arial");
+                resetTxt.setPosition((getWidth() / 2) - 166, (getHeight() / 2) + 55);
+                var startGameTxt = new Text("Press F to Start", "30pt Arial");
+                startGameTxt.setPosition((getWidth() / 2) - 150, (getHeight() / 2) - 5);
+                var gameIsOver = false;
+                var gameHasStarted = false;
+    
+                var eatingApples = false;
+                //creates scoring
+                var gameScore = 0;
+                var txt = new Text("Score: " + gameScore, "17pt Arial");
+                txt.setPosition(4, 20);
+                var loseTxt = new Text("Game Over", "30pt Arial");
+                loseTxt.setPosition((getWidth() / 2) - 104, (getHeight() / 2) - 34);
+                if (localStorage.getItem("localHighScore") == null){
+                    var highScore = 0;
+                }else {
+                var highScore = localStorage.getItem("localHighScore");
+                }
+                var highScoreTxt = new Text("High Score: " + highScore, "17pt Arial");
+                highScoreTxt.setPosition(4, getHeight() - 5);
+                //end of variables
+    
+    
+    
+                function doScore() {
+                    remove(txt);
+                    txt.setText("Score: " + gameScore);
+                    add(txt);
+                }
+    
+                function start() {
+                    keyDownMethod(keyDown);
+                    add(startGameTxt);
+                }
+    
+                function realStart() { // the actual start function that begins all my timers
+                    remove(startGameTxt);
+                    createSnake();
+                    keyDownMethod(keyDown);
+                    setTimer(moveSnake, speed);
+                    setTimer(checkSelfCollision, 1);
+                    setTimer(checkFood, 1);
+                    setTimer(checkFoodCollision, 1);
+                    setTimer(wallCheck, 1);
+                    gameStart();
+                    gameStart();
+                    gameStart();
+                    gameStart();
+                    gameHasStarted = true;
+                    highScoreTxt.setText("High Score: " + highScore);
+                    add(highScoreTxt);
+                }
+    
+                function gameReset() { //what happens when you press space after death
+                    gameIsOver = false;
+                    remove(loseTxt);
+                    remove(txt);
+                    remove(snake);
+                    remove(apple);
+                    remove(resetTxt);
+                    txt.setPosition(4, 20);
+                    numSnakes = 0;
+                    for (var i = blocks.length - 1; i >= 0; i--) {
+                        if (i > 0) {
+                            remove(blocks[i]);
+                        }
+                    }
+                    blocks = [];
+                    direction = 0;
+                    numSnakes = 0;
+                    hasTail = false;
+                    moveX = snake.width;
+                    moveY = 0;
+                    foodSpawned = false;
+                    appleX = Randomizer.nextInt(1, ((getWidth() - size) / size)) * size;
+                    appleY = Randomizer.nextInt(1, ((getHeight() - size) / size)) * size;
+                    gameScore = 0;
+                    realStart();
+                }
+    
+                function gameStart() { //lets snake start at 3 long
+                    numSnakes++;
+                    var newSnake = new Rectangle(size, size);
+                    newSnake.setColor(Color.green);
+                    newSnake.setPosition(-100, -100);
+                    add(newSnake);
+                    blocks.push(newSnake);
+                    doScore();
+                }
+    
+                function gameOver() { //duh
+                    if (gameScore > highScore) {
+                        highScore = gameScore;
+                    }
+                    remove(highScoreTxt);
+                    highScoreTxt.setText("High Score: " + highScore);
+                    stopTimer(moveSnake);
+                    stopTimer(checkSelfCollision);
+                    stopTimer(wallCheck);
+                    stopTimer(snakeTailMovement); //if active, snake doesn't collapse on death
+                    println("Game Over");
+                    //game over text
+                    remove(txt);
+                    add(loseTxt);
+                    txt.setPosition((getWidth() / 2) - 75, (getHeight() / 2) + 10);
+                    txt.setText("Final Score: " + gameScore);
+                    add(txt)
+                    gameIsOver = true;
+                    add(resetTxt);
+                    add(highScoreTxt);
+                    eatingApples = false;
+                    console.log(highScore);
+                    localStorage.setItem("localHighScore", highScore);
+                    logScore();
+                }
+    
+                function wallCheck() { //checking if you are off map every milisecond
+                    if (snake.getX() > getWidth() - 1) {
+                        gameOver();
+                    }
+                    if (snake.getX() < 0) {
+                        gameOver();
+                    }
+                    if (snake.getY() > getHeight() - 1) {
+                        gameOver();
+                    }
+                    if (snake.getY() < 0) {
+                        gameOver();
+                    }
+                }
+    
+                function checkFoodCollision() { //as well as adds the next tail block
+                    if (snake.getY() == apple.getY()) {
+                        if (snake.getX() == apple.getX()) {
+                            remove(apple);
+                            foodSpawned = false;
+                            numSnakes++;
+                            var newSnake = new Rectangle(size, size);
+                            newSnake.setColor(Color.green);
+                            newSnake.setPosition(-100, -100);
+                            add(newSnake);
+                            blocks.push(newSnake);
+                            gameScore = gameScore + 1;
+                            doScore();
+                        }
+                    }
+                }
+    
+                function checkFood() { //checking if food is present on screen to spawn more
+                    if (foodSpawned == false) {
+                        appleX = Randomizer.nextInt(1, ((getWidth() - size) / size)) * size;
+                        appleY = Randomizer.nextInt(1, ((getHeight() - size) / size)) * size;
+                        apple.setPosition(appleX, appleY);
+                        checkFoodInTail();
+                        checkFoodInTail();
+                        checkFoodInTail();
+                        add(apple);
+                        foodSpawned = true;
+                    }
+                }
+    
+                function checkFoodInTail() {
+                    for (var i = 0; i < blocks.length; i++) {
+                        if (appleX == blocks[i].getX() && appleY == blocks[i].getY()) {
+                            appleX = Randomizer.nextInt(1, ((getWidth() - size) / size)) * size;
+                            appleY = Randomizer.nextInt(1, ((getHeight() - size) / size)) * size;
+                            apple.setPosition(appleX, appleY);
+                        }
+                    }
+                }
+    
+                function checkSelfCollision() {
+                    for (var i = 0; i < blocks.length; i++) {
+                        if (i > 1) {
+                            //println("ow")
+                            if (snake.getX() == blocks[i].getX()) {
+                                if (snake.getY() == blocks[i].getY())
+                                    gameOver();
+                            }
+                        }
+                    }
+                }
+    
+                function snakeTailMovement() { //updates all snake tail blocks movement every "speed"
+                    for (var i = blocks.length - 1; i >= 0; i--) {
+                        if (i > 0) {
+                            blocks[i].setPosition(blocks[i - 1].getX(), blocks[i - 1].getY());
+                        }
+                    }
+                }
+    
+                function createSnake() { //sets start position and adds rect to array
+                    snake.setPosition((((getWidth() / size) / 2) * size) - (size * 4), (((getHeight() / size) / 2) * size) - (size * 4));
+                    add(snake);
+                    blocks.push(snake);
+                }
+    
+                function moveSnake() {
+                    snake.move(moveX, moveY);
+                    if (moveX == (snake.width * -1) && moveY == 0) {
+                        direction = 4;
+                    }
+                    if (moveX == (snake.width) && moveY == 0) {
+                        direction = 2;
+                    }
+                    if (moveX == 0 && moveY == (snake.height * -1)) {
+                        direction = 1;
+                    }
+                    if (moveX == 0 && moveY == (snake.height)) {
+                        direction = 3;
+                    }
+    
+                    if (hasTail == false) {
+                        setTimer(snakeTailMovement, speed);
+                        hasTail = true;
+                    }
+                }
+    
+                function eatAppleManually() { //dumb apple eating function can be used however
+                    remove(apple);
+                    foodSpawned = false;
+                    numSnakes++;
+                    var newSnake = new Rectangle(size, size);
+                    newSnake.setPosition(-100, -100);
+    
+                    newSnake.setColor(snColor);
+                    add(newSnake);
+                    blocks.push(newSnake);
+                    apple.setColor(Color.red);
+                    gameScore = gameScore + 1;
+                    doScore();
+    
+                }
+    
+                function keyDown(e) {
+                    if (e.keyCode == Keyboard.LEFT && direction != 2) {
+                        //println("left");
+                        moveX = snake.width * -1;
+                        moveY = 0;
+                    }
+                    if (e.keyCode == Keyboard.RIGHT && direction != 4) {
+                        //println("right");
+                        moveX = snake.width;
+                        moveY = 0;
+                    }
+                    if (e.keyCode == Keyboard.UP && direction != 3) {
+                        //println("up");
+                        moveX = 0;
+                        moveY = snake.height * -1;
+                    }
+                    if (e.keyCode == Keyboard.DOWN && direction != 1) {
+                        //println("down");
+                        moveX = 0;
+                        moveY = snake.height;
+                    }
+                    if (e.keyCode == Keyboard.SPACE && gameIsOver == true) {
+                        gameReset();
+                    }
+                    if (e.keyCode == Keyboard.letter('F') && gameHasStarted == false) {
+                        realStart();
+                    }
+    
+                }
+    
+    
+                if (typeof start === 'function') {
+                    start();
+                }
+            };
+        </script>
+    
+    
+    </body>
+    
+    </html>
