@@ -19,11 +19,13 @@
 .button:hover {
     background-color: #04DF04;
     color:black;
-
 }
 .buttons{
     text-align: center;
 }
 body{
-    background-color: black;
+    background-color: #07a394;
+}
+h1{
+    font-size:2vh;
 }

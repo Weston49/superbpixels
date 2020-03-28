@@ -44,7 +44,7 @@
 </head>
     
     <body>
-    
+        <h1>Username: </h1><p id="displayName">Go back and put in a username!</p>
         <canvas width="640" height="400" class="codehs-editor-canvas"></canvas>
         <form action=".\index.html">
             <button type="submit" class="button">
@@ -54,6 +54,7 @@
 
     
         <script>
+            document.getElementById("displayName").innerHTML = localStorage.getItem("username");
             if (localStorage.getItem("name") != null){
                 document.getElementById("name").value = localStorage.getItem("username");
             }
@@ -343,8 +344,34 @@
                     start();
                 }
             };
+            
         </script>
-    
+    <table>
+        <tr>
+          <th>Name</th>
+          <th>Score</th>
+        </tr>
+        <tr>
+          <td id="name1">Play</td>
+          <td id="score1">A</td>
+        </tr>
+        <tr>
+            <td id="name2">Game</td>
+            <td id="score2">To</td>
+        </tr>
+        <tr>
+            <td id="name3">Update</td>
+            <td id="score3">The</td>
+        </tr>
+        <tr>
+            <td id="name4">High</td>
+            <td id="score4">Scores</td>
+        </tr>
+        <tr>
+            <td id="name5">Have</td>
+            <td id="score5">Fun</td>
+        </tr>
+      </table>
     
     </body>
     

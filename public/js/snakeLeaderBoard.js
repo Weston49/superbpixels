@@ -29,4 +29,14 @@ function updateLeaderBoard(scores){
     };
     console.log(sortedNames);
     console.log(sortedScores);
+    document.getElementById("name1").innerHTML = sortedNames[0];
+    document.getElementById("score1").innerHTML = sortedScores[0];
+    document.getElementById("name2").innerHTML = sortedNames[1];
+    document.getElementById("score2").innerHTML = sortedScores[1];
+    document.getElementById("name3").innerHTML = sortedNames[2];
+    document.getElementById("score3").innerHTML = sortedScores[2];
+    document.getElementById("name4").innerHTML = sortedNames[3];
+    document.getElementById("score4").innerHTML = sortedScores[3];
+    document.getElementById("name5").innerHTML = sortedNames[4];
+    document.getElementById("score5").innerHTML = sortedScores[4];
 };
