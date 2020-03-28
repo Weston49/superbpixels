@@ -42,17 +42,17 @@
 
 
 </head>
-    
+
     <body>
-        <h1>Username: </h1><p id="displayName">Go back and put in a username!</p>
+        <div class="userInfo">
+        <h1>Username: </h1><h2 id="displayName">Go back and put in a username!</h2>
+    </div>
         <canvas width="640" height="400" class="codehs-editor-canvas"></canvas>
         <form action=".\index.html">
             <button type="submit" class="button">
                     Home Page
                 </button>
         </form>
-
-    
         <script>
             document.getElementById("displayName").innerHTML = localStorage.getItem("username");
             if (localStorage.getItem("name") != null){
@@ -310,29 +310,29 @@
                 }
     
                 function keyDown(e) {
-                    if (e.keyCode == Keyboard.LEFT && direction != 2) {
+                    if (e.keyCode == Keyboard.LEFT && direction != 2 || e.keyCode == Keyboard.letter('A') && direction != 2) {
                         //println("left");
                         moveX = snake.width * -1;
                         moveY = 0;
                     }
-                    if (e.keyCode == Keyboard.RIGHT && direction != 4) {
+                    if (e.keyCode == Keyboard.RIGHT && direction != 4 || e.keyCode == Keyboard.letter('D') && direction != 4) {
                         //println("right");
                         moveX = snake.width;
                         moveY = 0;
                     }
-                    if (e.keyCode == Keyboard.UP && direction != 3) {
+                    if (e.keyCode == Keyboard.UP && direction != 3 || e.keyCode == Keyboard.letter('W') && direction != 3) {
                         //println("up");
                         moveX = 0;
                         moveY = snake.height * -1;
                     }
-                    if (e.keyCode == Keyboard.DOWN && direction != 1) {
+                    if (e.keyCode == Keyboard.DOWN && direction != 1 || e.keyCode == Keyboard.letter('S') && direction != 1) {
                         //println("down");
                         moveX = 0;
                         moveY = snake.height;
                     }
                     if (e.keyCode == Keyboard.SPACE && gameIsOver == true) {
                         gameReset();
-                    }
+                    }   
                     if (e.keyCode == Keyboard.letter('F') && gameHasStarted == false) {
                         realStart();
                     }
