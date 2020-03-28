@@ -21,13 +21,14 @@
 </head>
 
 <body onload="loadUsernameBox()">
-<div id="userInfo">
+<div id="userInfo" class="userInfo">
      <p id="usersname"></p>
      <script>
           document.getElementById("usersname").innerHTML = "Welcome back " + localStorage.getItem("username");
      </script>
 </div>    
-
+<br>
+<div class="buttons">
 <form action=".\snakeGame.html">
      <button type="submit" class="button">
              Snake Game
@@ -38,5 +39,5 @@
              New Game (WIP)
          </button>
  </form>
-
+</div>
 <body>
