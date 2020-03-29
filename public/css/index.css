@@ -1,7 +1,6 @@
-.userInfo{
-    text-align: center;
-    color:black;
-    font-size:5vh;
+.bodyText{
+    text-align: left;
+    font-size:2vh;
 }
 .button {
     background-color: #4CAF50;

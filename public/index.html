@@ -1,43 +1,50 @@
 <head>
- <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <script src="/__/firebase/7.12.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.12.0/firebase-auth.js"></script>
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
-  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="/__/firebase/7.12.0/firebase-app.js"></script>
+ <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 
-  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-  <script src="/__/firebase/7.12.0/firebase-analytics.js"></script>
 
-  <!-- Add Firebase products that you want to use -->
-  <script src="/__/firebase/7.12.0/firebase-auth.js"></script>
-  <script src="/__/firebase/7.12.0/firebase-firestore.js"></script>
-  <script src="/__/firebase/7.12.0/firebase-database.js"></script>
-  <script src="./js/firebase.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
-  <!--Referencing non firebase things-->
-  <link rel="stylesheet" type="text/css" href="./css/index.css">
-  <script src="./js/snakeLeaderBoard.js"></script>
-  <script src="./js/index.js"></script>
+ <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+ <script src="/__/firebase/7.12.0/firebase-analytics.js"></script>
+
+ <!-- Add Firebase products that you want to use -->
+
+ <script src="/__/firebase/7.12.0/firebase-firestore.js"></script>
+ <script src="/__/firebase/7.12.0/firebase-database.js"></script>
+
+
+
+ <!--Referencing non firebase things-->
+ <link rel="stylesheet" type="text/css" href="./css/index.css">
+ <script src="./js/firebase.js"></script>
+     <script src="./js/snakeLeaderBoard.js"></script>
+     <script src="./js/index.js"></script>
+
 </head>
-
-<body onload="loadUsernameBox()">
-<div id="userInfo" class="userInfo">
-     <p id="usersname"></p>
-     <script>
-          document.getElementById("usersname").innerHTML = "Welcome back " + localStorage.getItem("username");
-     </script>
-</div>    
-<br>
-<div class="buttons">
-<form action=".\snakeGame.html">
-     <button type="submit" class="button">
-             Snake Game
-         </button>
- </form>
- <form action=".\covidGame.html">
-     <button type="submit" class="button">
-             New Game (WIP)
-         </button>
- </form>
-</div>
-<body>
+<h1 id="user">Login to Save your scores!</h1>
+   <body>
+    <form action=".\main.html">
+        <button type="submit" class="button">
+                Login Page
+            </button>
+    </form>
+   <div class="buttons">
+   <form action=".\snakeGame.html">
+        <button type="submit" class="button">
+                Snake Game
+            </button>
+    </form>
+    <form action=".\covidGame.html">
+        <button type="submit" class="button">
+                New Game (WIP)
+            </button>
+    </form>
+   </div>
+<script>
+    setTimeout(function(){
+        checkUser();
+    }, 1500);
+</script>
+   <body>

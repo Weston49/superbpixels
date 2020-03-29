@@ -1,9 +1,10 @@
-function loadUsernameBox(){
-    if (localStorage.getItem("username") == null){
-        document.getElementById("userInfo").innerHTML = "Input name to save highscores!<br><input type='text' id='name' placeholder='Username'><button onclick='submitName()'>Submit</button>"
+
+function checkUser(){
+    var user = firebase.auth().currentUser;
+    if (user.displayName == null){
+        console.log("no user")
+    }else{
+        document.getElementById("user").innerHTML = "Welcome back " + user.displayName;
     }
-}
-function submitName(){
-    localStorage.setItem("username", document.getElementById("name").value)
-    window.open("index.html", '_top');
+    localStorage.setItem("username", user.displayName); 
 }
