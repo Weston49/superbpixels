@@ -1,7 +1,7 @@
 
 <html>
     <head>
-        <title>Snake Game Simple</title>
+  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script type="text/javascript" src="https://static.codehs.com/gulp/da9dd51994928211bbc93e60d93d585ea9f44a7c/chs-js-lib/chs.js"></script>
         <style>
@@ -39,22 +39,65 @@
       <!--Referencing non firebase things-->
   <link rel="stylesheet" type="text/css" href="./css/index.css">
   <script src="./js/snakeLeaderBoard.js"></script>
-
+    <title>SnakeGame</title>
 
 </head>
 
     <body>
-        <div class="userInfo">
-        <h1>Username: </h1><h2 id="displayName">Go back and put in a username!</h2>
-    </div>
-        <canvas width="640" height="400" class="codehs-editor-canvas"></canvas>
-        <form action=".\index.html">
+        <div id="container">
+            <div id="header">
+                <h1>SuperbPixel's Snake Game</h1>
+            </div>
+
+            <div id="content">
+                <div id="snakeGame">
+                    <canvas width="640" height="400" class="codehs-editor-canvas"></canvas>
+                </div>
+                <div id="usernameBox">
+                    <h1>Username </h1><p id="displayName">Login to save Scores</p>
+                </div>
+                <div id="leaderBoardBox">
+                    <table id="leaderBoard">
+                        <tr>
+                        <th>Name</th>
+                        <th>Score</th>
+                        </tr>
+                        <tr>
+                        <td id="name1">Play</td>
+                        <td id="score1">A</td>
+                        </tr>
+                        <tr>
+                            <td id="name2">Game</td>
+                            <td id="score2">To</td>
+                        </tr>
+                        <tr>
+                            <td id="name3">Update</td>
+                            <td id="score3">The</td>
+                        </tr>
+                        <tr>
+                            <td id="name4">High</td>
+                            <td id="score4">Scores</td>
+                        </tr>
+                        <tr>
+                            <td id="name5">Have</td>
+                            <td id="score5">Fun</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <form action=".\index.html" id="backButton">
             <button type="submit" class="button">
                     Home Page
                 </button>
         </form>
+
+        
         <script>
-            document.getElementById("displayName").innerHTML = localStorage.getItem("username");
+            if (localStorage.getItem("username") != null){
+                document.getElementById("displayName").innerHTML = localStorage.getItem("username");
+            }
+        
             if (localStorage.getItem("name") != null){
                 document.getElementById("name").value = localStorage.getItem("username");
             }
@@ -168,6 +211,8 @@
                 function gameOver() { //duh
                     if (gameScore > highScore) {
                         highScore = gameScore;
+                        localStorage.setItem("localHighScore", highScore);
+                        logScore();
                     }
                     remove(highScoreTxt);
                     highScoreTxt.setText("High Score: " + highScore);
@@ -187,8 +232,6 @@
                     add(highScoreTxt);
                     eatingApples = false;
                     //console.log(highScore);
-                    localStorage.setItem("localHighScore", highScore);
-                    logScore();
                 }
     
                 function wallCheck() { //checking if you are off map every milisecond
@@ -344,35 +387,10 @@
                     start();
                 }
             };
-            
+            setTimeout(function(){
+            retrieveHighScore();    
+            }, 1000);
         </script>
-    <table>
-        <tr>
-          <th>Name</th>
-          <th>Score</th>
-        </tr>
-        <tr>
-          <td id="name1">Play</td>
-          <td id="score1">A</td>
-        </tr>
-        <tr>
-            <td id="name2">Game</td>
-            <td id="score2">To</td>
-        </tr>
-        <tr>
-            <td id="name3">Update</td>
-            <td id="score3">The</td>
-        </tr>
-        <tr>
-            <td id="name4">High</td>
-            <td id="score4">Scores</td>
-        </tr>
-        <tr>
-            <td id="name5">Have</td>
-            <td id="score5">Fun</td>
-        </tr>
-      </table>
-    
     </body>
     
     </html>

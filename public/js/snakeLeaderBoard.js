@@ -1,4 +1,23 @@
 
+function retrieveHighScore(){
+    firebase.database().ref('SnakeScores/').once("value",setHighScore);
+};
+function setHighScore(scores){
+    var scoresArray = [];
+    var scoresJSON = scores.val();
+    namesArray = Object.keys(scoresJSON);
+    for (i=0; i < namesArray.length; i++){
+        scoresArray.push(scoresJSON[namesArray[i]]['Score'])
+    }
+    console.log(scoresArray);
+    console.log(namesArray);
+    var user = localStorage.getItem('username')
+    if (namesArray.indexOf(user) != -1){
+        indexOfScore = namesArray.indexOf(user);
+        localStorage.setItem("localHighScore",scoresArray[indexOfScore]);
+    }
+    logScore();
+}
 function logScore() {
     var scoreToLog = localStorage.getItem("localHighScore");
     var user = localStorage.getItem('username')
@@ -27,8 +46,8 @@ function updateLeaderBoard(scores){
         scoresArray.splice(topIndex, 1);
         namesArray.splice(topIndex,1);
     };
-    console.log(sortedNames);
-    console.log(sortedScores);
+    //console.log(sortedNames);
+    //console.log(sortedScores);
     document.getElementById("name1").innerHTML = sortedNames[0];
     document.getElementById("score1").innerHTML = sortedScores[0];
     document.getElementById("name2").innerHTML = sortedNames[1];

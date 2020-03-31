@@ -1,33 +1,121 @@
-.bodyText{
-    text-align: left;
-    font-size:2vh;
-}
-.button {
-    background-color: #4CAF50;
-    border: none;
-    color: black;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    font-size: 2.4vh;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-  
-.button:hover {
-    background-color: #04DF04;
-    color:black;
-}
-.buttons{
-    text-align: center;
-}
 body{
-    background-color: #07a394;
+    background-color: #988B8E;
+    font-size:2vh;
+    font-family:Helvetica, Arial,  sans-serif;
+}
+p{
+    margin:0;
 }
 h1{
-    font-size:3.5vh;
+    margin:0;
+    font-size:5vh;
 }
 h2{
-    font-size:2.4vh;
+    margin:0;
+    font-size:3vh;
+}
+form{
+    margin:0;
+}
+#container {
+    background-color: #0F4C5C;
+    padding-right: auto;
+    padding-left: auto;
+}
+#header{
+    background-color: #659B5E;
+    text-align: center;
+    color:black;
+    padding:0.6%;
+
+}
+.subHeader{
+    text-align: center;
+    font-size:3vh;
+
+}
+#content {
+
+}
+
+#games{
+    width:68%;
+    float: left;
+    background-color:#444B6E;
+    height:85%; 
+    padding:1%;
+    border-radius:4%;
+    text-align:center;
+}
+#rightContent{
+    width:28%;
+    float:right;
+    padding:1%;
+}
+#login{
+    background-color: #9A031E;
+    height:22%;
+    padding:1%;
+    border-radius:3.5%;
+    text-align:center;
+}
+#filler{
+    background-color: #5F0F40;
+    height:58%;
+    padding:1%;
+    border-radius:3.5%;
+}
+#footer{
+    clear:both;
+    font-weight: bold;
+    background: white;
+    text-align: right;
+    padding:0.3%;
+}
+.button{
+    font-size:3vh;
+    background-color:#659B5E;
+    border-radius:5%;
+    padding:2%;
+    border:0;
+}
+#snakeGame{
+    float:left;
+    padding:4%;
+}
+#leaderBoard {
+    border-collapse: collapse;
+    width: 20%;
+    text-align:center;
+    font-size:2.5vh;
+}
+#leaderBoard td, #leaderBoard th {
+    border: 1px solid #ddd;
+    padding: 4%;
+}
+#leaderboard tr{
+    background-color: #f2f2f2;
+}
+
+
+#leaderboard th {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  text-align: center;
+  font-size:5vh;
+  background-color: #659B5E;
+  color: black;
+}
+#usernameBox{
+
+}
+#leaderBoardBox{
+    padding-bottom:20%;
+}
+#backButton .button{
+    position: absolute;
+    right:1%;
+    top:1.2%;
+    padding:1%;
+    border: 1px solid black;
 }

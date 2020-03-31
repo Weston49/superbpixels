@@ -1,5 +1,6 @@
 
 function checkUser(){
+    document.getElementById("message").innerHTML = "Works better on desktop! Mobile functionality coming later!";
     var user = firebase.auth().currentUser;
     if (user.displayName == null){
         console.log("no user")
