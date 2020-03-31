@@ -1,6 +1,6 @@
 body{
-    background-color: #988B8E;
-    font-size:2vh;
+    background-color: rgb(70, 134, 160);
+    font-size:2vmin;
     font-family:Helvetica, Arial,  sans-serif;
 }
 p{
@@ -8,22 +8,22 @@ p{
 }
 h1{
     margin:0;
-    font-size:5vh;
+    font-size:5vmin;
 }
 h2{
     margin:0;
-    font-size:3vh;
+    font-size:3vmin;
 }
 form{
     margin:0;
 }
 #container {
-    background-color: #0F4C5C;
+    background-color: #2d5280;
     padding-right: auto;
     padding-left: auto;
 }
 #header{
-    background-color: #659B5E;
+    background-color: #008044;
     text-align: center;
     color:black;
     padding:0.6%;
@@ -31,7 +31,7 @@ form{
 }
 .subHeader{
     text-align: center;
-    font-size:3vh;
+    font-size:3vmin;
 
 }
 #content {
@@ -41,7 +41,7 @@ form{
 #games{
     width:68%;
     float: left;
-    background-color:#444B6E;
+    background-color:rgb(23, 104, 151);
     height:85%; 
     padding:1%;
     border-radius:4%;
@@ -53,14 +53,14 @@ form{
     padding:1%;
 }
 #login{
-    background-color: #9A031E;
+    background-color: #00487C;
     height:22%;
     padding:1%;
     border-radius:3.5%;
     text-align:center;
 }
 #filler{
-    background-color: #5F0F40;
+    background-color: #21897E;
     height:58%;
     padding:1%;
     border-radius:3.5%;
@@ -68,16 +68,20 @@ form{
 #footer{
     clear:both;
     font-weight: bold;
-    background: white;
+    background: #EEE;
     text-align: right;
     padding:0.3%;
 }
 .button{
-    font-size:3vh;
-    background-color:#659B5E;
+    font-size:3vmin;
+    background-color:rgb(8, 182, 81);
     border-radius:5%;
     padding:2%;
     border:0;
+    cursor:pointer;
+}
+.button:hover{
+    background-color:rgb(6, 95, 43);
 }
 #snakeGame{
     float:left;
@@ -87,7 +91,7 @@ form{
     border-collapse: collapse;
     width: 20%;
     text-align:center;
-    font-size:2.5vh;
+    font-size:2.5vmin;
 }
 #leaderBoard td, #leaderBoard th {
     border: 1px solid #ddd;
@@ -102,8 +106,8 @@ form{
   padding-top: 2%;
   padding-bottom: 2%;
   text-align: center;
-  font-size:5vh;
-  background-color: #659B5E;
+  font-size:5vmin;
+  background-color: #008044;
   color: black;
 }
 #usernameBox{
@@ -117,5 +121,5 @@ form{
     right:1%;
     top:1.2%;
     padding:1%;
-    border: 1px solid black;
+
 }
